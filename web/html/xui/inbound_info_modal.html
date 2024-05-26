@@ -233,38 +233,39 @@
           </td>
         </tr>
       </table>
-      <template v-if="app.subSettings.enable && infoModal.clientSettings.subId">
-        <a-divider>Subscription URL</a-divider>
-        <tr-info-row class="tr-info-row">
-          <tr-info-title class="tr-info-title">
-            <a-tag color="purple">Subscription Link</a-tag>
-            <a-tooltip title='{{ i18n "copy" }}'>
-              <a-button size="small" icon="snippets" id="copy-sub-link" @click="copyToClipboard('copy-sub-link', infoModal.subLink)"></a-button>
-            </a-tooltip>
-          </tr-info-title>
-          <a :href="[[ infoModal.subLink ]]" target="_blank">[[ infoModal.subLink ]]</a>
-        </tr-info-row>
-        <tr-info-row class="tr-info-row">
-          <tr-info-title class="tr-info-title">
-            <a-tag color="purple">Json Link</a-tag>
-            <a-tooltip title='{{ i18n "copy" }}'>
-              <a-button size="small" icon="snippets" id="copy-subJson-link" @click="copyToClipboard('copy-subJson-link', infoModal.subJsonLink)"></a-button>
-            </a-tooltip>
-          </tr-info-title>
-          <a :href="[[ infoModal.subJsonLink ]]" target="_blank">[[ infoModal.subJsonLink ]]</a>
-        </tr-info-row>
-      </template>
-      <template v-if="app.tgBotEnable && infoModal.clientSettings.tgId">
-        <a-divider>Telegram ChatID</a-divider>
-        <tr-info-row class="tr-info-row">
-          <tr-info-title class="tr-info-title">
-            <a-tag color="blue">[[ infoModal.clientSettings.tgId ]]</a-tag>
-            <a-tooltip title='{{ i18n "copy" }}'>
-              <a-button size="small" icon="snippets" id="copy-tg-link" @click="copyToClipboard('copy-tg-link', infoModal.clientSettings.tgId)"></a-button>
-            </a-tooltip>
-          </tr-info-title>
-        </tr-info-row>
-      </template>
+        <template v-if="app.subSettings.enable && infoModal.clientSettings.subId">
+            <a-divider>Subscription URL</a-divider>
+            <a-row>
+                <a-col :sx="24" :md="22">SUBAnti: <a :href="[[ infoModal.subLink ]]" target="_blank">[[ infoModal.subLink ]]</a></a-col>
+                <a-col :sx="24" :md="2" style="text-align: right;">
+                    <a-tooltip title='{{ i18n "copy" }}'>
+                        <button class="ant-btn ant-btn-primary" id="copy-sub-link" @click="copyToClipboard('copy-sub-link', infoModal.subLink)">
+                            <a-icon type="snippets"></a-icon>
+                        </button>
+                    </a-tooltip>
+                </a-col>
+            </a-row>
+            <a-row>
+                <a-col :sx="24" :md="22">real SUB: <a :href="[[ infoModal.subLinkreal ]]" target="_blank">[[ infoModal.subLinkreal ]]</a></a-col>
+                <a-col :sx="24" :md="2" style="text-align: right; margin-top: 5px;">
+                    <a-tooltip title='{{ i18n "copy" }}'>
+                        <button class="ant-btn ant-btn-primary" id="copy-sub-linkreal" @click="copyToClipboard('copy-sub-linkreal', infoModal.subLinkreal)">
+                            <a-icon type="snippets"></a-icon>
+                        </button>
+                    </a-tooltip>
+                </a-col>
+            </a-row>
+            <a-row>
+                <a-col :sx="24" :md="22">JSON: <a :href="[[ infoModal.subJsonLink ]]" target="_blank">[[ infoModal.subJsonLink ]]</a></a-col>
+                <a-col :sx="24" :md="2" style="text-align: right; margin-top: 5px;">
+                    <a-tooltip title='{{ i18n "copy" }}'>
+                        <button class="ant-btn ant-btn-primary" id="copy-subJson-link" @click="copyToClipboard('copy-subJson-link', infoModal.subJsonLink)">
+                            <a-icon type="snippets"></a-icon>
+                        </button>
+                    </a-tooltip>
+                </a-col>
+            </a-row>
+        </template>
       <template v-if="dbInbound.hasLink()">
         <a-divider>URL</a-divider>
         <tr-info-row v-for="(link,index) in infoModal.links" class="tr-info-row">
@@ -438,6 +439,7 @@
     index: null,
     isExpired: false,
     subLink: '',
+    subLinkreal: '',
     subJsonLink: '',
     show(dbInbound, index) {
       this.index = index;
@@ -453,8 +455,9 @@
       }
       if (this.clientSettings) {
         if (this.clientSettings.subId) {
-          this.subLink = this.genSubLink(this.clientSettings.subId);
-          this.subJsonLink = this.genSubJsonLink(this.clientSettings.subId);
+                    this.subLink = "https://dl.separ.top/product/"+this.clientSettings.subId;
+                    this.subLinkreal = this.genSubLink(this.clientSettings.subId);
+                   this.subJsonLink = this.genSubJsonLink(this.clientSettings.subId);
         }
       }
       this.visible = true;
