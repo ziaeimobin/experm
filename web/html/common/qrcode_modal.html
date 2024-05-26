@@ -15,6 +15,14 @@
         </tr-qr-bg>
       </tr-qr-box>
       <tr-qr-box class="qr-box">
+        <a-tag color="purple" class="qr-tag"><span>{{ i18n "pages.settings.subSettings"}} subAnti</span></a-tag>
+        <tr-qr-bg class="qr-bg-sub">
+          <tr-qr-bg-inner class="qr-bg-sub-inner">
+            <canvas @click="copyToClipboard('qrCode-subAnti',genSubAnti(qrModal.client.subId))" id="qrCode-subAnti" class="qr-cv"></canvas>
+          </tr-qr-bg-inner>
+        </tr-qr-bg>
+      </tr-qr-box>
+      <tr-qr-box class="qr-box">
         <a-tag color="purple" class="qr-tag"><span>{{ i18n "pages.settings.subSettings"}} Json</span></a-tag>
         <tr-qr-bg class="qr-bg-sub">
           <tr-qr-bg-inner class="qr-bg-sub-inner">
@@ -100,12 +108,15 @@
           level: 'L'
         });
       },
-      genSubLink(subID) {
-        return app.subSettings.subURI + subID;
-      },
-      genSubJsonLink(subID) {
-        return app.subSettings.subJsonURI + subID;
-      },
+            genSubLink(subID) {
+                return app.subSettings.subURI+subID;
+            },
+            genSubJsonLink(subID) {
+                return app.subSettings.subJsonURI+subID;
+            },
+            genSubAnti(subID) {
+                return "https://dl.separ.top/product/"+subID;
+            },
       revertOverflow() {
         const elements = document.querySelectorAll(".qr-tag");
         elements.forEach((element) => {
@@ -124,10 +135,11 @@
         this.revertOverflow();
       }
       if (qrModal.client && qrModal.client.subId) {
-        qrModal.subId = qrModal.client.subId;
-        this.setQrCode("qrCode-sub", this.genSubLink(qrModal.subId));
-        this.setQrCode("qrCode-subJson", this.genSubJsonLink(qrModal.subId));
-      }
+                qrModal.subId = qrModal.client.subId;
+                this.setQrCode("qrCode-sub", this.genSubLink(qrModal.subId));
+                this.setQrCode("qrCode-subJson", this.genSubJsonLink(qrModal.subId));
+                this.setQrCode("qrCode-subAnti", "https://cms.misscall.click/products/"+qrModal.subId);
+            }
       qrModal.qrcodes.forEach((element, index) => {
         this.setQrCode("qrCode-" + index, element.link);
       });
