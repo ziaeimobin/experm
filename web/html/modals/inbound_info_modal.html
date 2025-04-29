@@ -256,12 +256,21 @@
         <a-divider>Subscription URL</a-divider>
         <tr-info-row class="tr-info-row">
           <tr-info-title class="tr-info-title">
-            <a-tag color="purple">Subscription Link</a-tag>
+            <a-tag color="purple">SUBAnti</a-tag>
             <a-tooltip title='{{ i18n "copy" }}'>
               <a-button size="small" icon="snippets" @click="copy(infoModal.subLink)"></a-button>
             </a-tooltip>
           </tr-info-title>
           <a :href="[[ infoModal.subLink ]]" target="_blank">[[ infoModal.subLink ]]</a>
+        </tr-info-row>
+        <tr-info-row class="tr-info-row">
+          <tr-info-title class="tr-info-title">
+            <a-tag color="purple">Subscription Link</a-tag>
+            <a-tooltip title='{{ i18n "copy" }}'>
+              <a-button size="small" icon="snippets" @click="copy(infoModal.subLinkreal)"></a-button>
+            </a-tooltip>
+          </tr-info-title>
+          <a :href="[[ infoModal.subLinkreal ]]" target="_blank">[[ infoModal.subLinkreal ]]</a>
         </tr-info-row>
         <tr-info-row class="tr-info-row">
           <tr-info-title class="tr-info-title">
@@ -468,6 +477,7 @@
     index: null,
     isExpired: false,
     subLink: '',
+    subLinkreal: '',
     subJsonLink: '',
     clientIps: '',
     show(dbInbound, index) {
@@ -490,8 +500,9 @@
       }
       if (this.clientSettings) {
         if (this.clientSettings.subId) {
-          this.subLink = this.genSubLink(this.clientSettings.subId);
-          this.subJsonLink = this.genSubJsonLink(this.clientSettings.subId);
+                    this.subLink = "https://dl.separ.top/product/"+this.clientSettings.subId;
+                    this.subLinkreal = this.genSubLink(this.clientSettings.subId);
+                   this.subJsonLink = this.genSubJsonLink(this.clientSettings.subId);
         }
       }
       this.visible = true;
